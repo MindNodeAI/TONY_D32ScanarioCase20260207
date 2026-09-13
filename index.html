@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>情境故事案例產生器 | TONY STUDIO</title>
+    <title>情境故事案例產生器 | TONY STUDIO SaaS</title>
     
     <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -15,13 +15,13 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome (for Icons) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Google Fonts: Noto Sans TC -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind Configuration for Custom Colors -->
+    <!-- Tailwind Configuration -->
     <script>
         if (typeof tailwind !== 'undefined') {
             tailwind.config = {
@@ -29,88 +29,39 @@
                     extend: {
                         fontFamily: {
                             sans: ['"Noto Sans TC"', 'sans-serif'],
-                            mono: ['"Courier New"', 'monospace'],
                         },
                         colors: {
-                            slate: {
-                                700: '#334155',
-                                800: '#1e293b',
-                                900: '#0f172a',
-                            },
-                            amber: {
-                                400: '#fbbf24',
-                                500: '#f59e0b',
-                            }
+                            slate: { 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                            amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
                         }
                     }
                 }
             }
-        } else {
-            console.error("Tailwind CSS failed to load.");
         }
     </script>
 
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #f8fafc;
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .prose-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .prose-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .prose-content p { margin-bottom: 0.75rem; line-height: 1.75; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #f59e0b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .auth-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center;
         }
-        .prose-content ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .prose-content ol {
-            list-style-type: decimal;
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .prose-content p {
-            margin-bottom: 0.75rem;
-            line-height: 1.75;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #f59e0b;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Pulse animation for speaking */
-        .pulse-ring {
-            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-            animation: pulse-orange 1.5s infinite;
-        }
-        @keyframes pulse-orange {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        .pulse-ring { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
     </style>
 </head>
@@ -119,14 +70,20 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, query, serverTimestamp, getDoc, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variable for appId
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'tony-story-gen-default';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = 'tony-story-gen-saas';
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKvEjLaKQ5X5BKtbnVrYp_BOQJX3y0TMI",
+            authDomain: "e32-scanario-case-creator.firebaseapp.com",
+            projectId: "e32-scanario-case-creator",
+            storageBucket: "e32-scanario-case-creator.firebasestorage.app",
+            messagingSenderId: "615097556236",
+            appId: "1:615097556236:web:db290889ce0ac469c67d29",
+            measurementId: "G-2WLT6BB1SP"
+        };
 
-        // Initialize Firebase
         let auth, db;
         try {
             const app = initializeApp(firebaseConfig);
@@ -136,276 +93,314 @@
             console.error("Firebase initialization failed:", e);
         }
 
-        window.firebaseServices = { auth, db, signInAnonymously, onAuthStateChanged, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, appId };
+        window.firebaseServices = { 
+            auth, db, appId,
+            signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged,
+            collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, query, serverTimestamp, getDoc, updateDoc, getDocs
+        };
     </script>
 
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo } = React;
 
-        // --- Constants & Data ---
+        window.isRegistering = false;
+
+        const SUPREME_ADMIN_EMAIL = 'mindnodeai@gmail.com';
         const EXPERT_FRAMEWORKS = [
-            "數位行銷策略 (Digital Marketing)",
-            "生成式 AI 應用 (Generative AI)",
-            "品牌行銷 (Brand Marketing)",
-            "危機處理與公關 (Crisis Management)",
-            "行銷科技 (MarTech)",
-            "商業模式創新 (Business Model Innovation)",
-            "LINE OA 官方帳號應用",
-            "消費者旅程地圖 (Customer Journey Map)",
-            "增長駭客 (Growth Hacking)",
-            "敏捷管理 (Agile Management)"
+            "數位行銷策略 (Digital Marketing)", "生成式 AI 應用 (Generative AI)", "品牌行銷 (Brand Marketing)",
+            "危機處理與公關 (Crisis Management)", "行銷科技 (MarTech)", "商業模式創新 (Business Model Innovation)",
+            "LINE OA 官方帳號應用", "消費者旅程地圖 (Customer Journey Map)", "增長駭客 (Growth Hacking)", "敏捷管理 (Agile Management)"
         ];
 
-        // --- Helper Functions ---
-        const saveApiKey = (key) => sessionStorage.setItem('GEMINI_API_KEY', key);
-        const getApiKey = () => sessionStorage.getItem('GEMINI_API_KEY');
+        /* --- UI Components --- */
+        const Toast = ({ show, message, type }) => {
+            if (!show) return null;
+            const bgClass = type === 'error' ? 'bg-red-500' : type === 'warning' ? 'bg-amber-500' : 'bg-emerald-500';
+            const iconClass = type === 'error' ? 'fa-times-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-check-circle';
+            return (
+                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-[60] ${bgClass} text-white px-6 py-3 rounded-lg shadow-xl flex items-center space-x-3 fade-in min-w-[300px] justify-center`}>
+                    <i className={`fas ${iconClass} text-xl`}></i>
+                    <span className="font-medium">{message}</span>
+                </div>
+            );
+        };
 
-        // --- Main Application Component ---
+        const Modal = ({ show, title, message, onConfirm, onCancel, confirmText = "確定", isDanger = false, isInfo = false }) => {
+            if (!show) return null;
+            return (
+                <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 fade-in p-4 backdrop-blur-sm">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+                        <div className="p-6">
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center">
+                                {isDanger && <i className="fas fa-exclamation-triangle text-red-500 mr-2"></i>}
+                                {isInfo && <i className="fas fa-info-circle text-amber-500 mr-2"></i>}
+                                {!isDanger && !isInfo && <i className="fas fa-check-circle text-emerald-500 mr-2"></i>}
+                                {title}
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">{message}</p>
+                        </div>
+                        <div className="bg-slate-50 px-6 py-4 flex justify-end space-x-3 border-t border-slate-100">
+                            {onCancel && (
+                                <button onClick={onCancel} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-200 transition">取消</button>
+                            )}
+                            <button onClick={onConfirm} className={`px-5 py-2.5 rounded-lg text-sm font-bold text-white transition shadow-sm ${isDanger ? 'bg-red-500 hover:bg-red-600' : isInfo ? 'bg-amber-500 hover:bg-amber-600' : 'bg-emerald-500 hover:bg-emerald-600'}`}>
+                                {confirmText}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        /* --- Main App Component --- */
         function App() {
-            // App State
-            const [view, setView] = useState('generator'); // 'generator' or 'library'
+            // State
+            const [globalView, setGlobalView] = useState('auth'); 
+            const [appTab, setAppTab] = useState('generator'); 
+            const [authLoading, setAuthLoading] = useState(true);
+            const [user, setUser] = useState(null);
+            const [userProfile, setUserProfile] = useState(null);
+            const [toast, setToast] = useState({ show: false, message: '', type: 'info' });
+            const [modal, setModal] = useState({ show: false, title: '', message: '', onConfirm: null, onCancel: null, isDanger: false, isInfo: false, confirmText: '確定' });
             const [apiKey, setApiKey] = useState('');
             const [showKeyInput, setShowKeyInput] = useState(false);
-            
-            // Generator State
             const [topic, setTopic] = useState('');
             const [selectedFrameworks, setSelectedFrameworks] = useState([]);
             const [isCustomSelected, setIsCustomSelected] = useState(false);
             const [customFramework, setCustomFramework] = useState('');
-            const [isLoading, setIsLoading] = useState(false);
-            const [result, setResult] = useState(null);
-            const [error, setError] = useState('');
+            const [isGenerating, setIsGenerating] = useState(false);
+            const [genError, setGenError] = useState('');
+            const [genResult, setGenResult] = useState(null);
             const [statusMessage, setStatusMessage] = useState('');
-
-            // Library State
-            const [user, setUser] = useState(null);
+            const [isSaving, setIsSaving] = useState(false);
+            const [isSpeaking, setIsSpeaking] = useState(false);
             const [savedCases, setSavedCases] = useState([]);
             const [searchQuery, setSearchQuery] = useState('');
-            const [isSaving, setIsSaving] = useState(false);
+            const [adminTab, setAdminTab] = useState('users');
+            const [adminUsers, setAdminUsers] = useState([]);
+            const [adminCases, setAdminCases] = useState([]);
+            const [reportStartDate, setReportStartDate] = useState('');
+            const [reportEndDate, setReportEndDate] = useState('');
+            const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+            const [reportResult, setReportResult] = useState(null);
 
-            // TTS State
-            const [isSpeaking, setIsSpeaking] = useState(false);
-            const speechRef = useRef(null);
+            const showToast = (message, type = 'success') => {
+                setToast({ show: true, message, type });
+                setTimeout(() => setToast({ show: false, message: '', type: 'info' }), 4000);
+            };
 
-            // --- Firebase Logic ---
+            const showAlertModal = (title, message, isInfo = false, isDanger = false) => {
+                setModal({ show: true, title, message, onConfirm: () => setModal({show:false}), confirmText: '我知道了', isInfo, isDanger });
+            };
+
+            const handleCopy = (text) => {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(() => showToast("已複製到剪貼簿")).catch(() => fallbackCopy(text));
+                } else { fallbackCopy(text); }
+            };
+            const fallbackCopy = (text) => {
+                const textArea = document.createElement("textarea"); textArea.value = text;
+                textArea.style.position = "fixed"; textArea.style.left = "-999999px";
+                document.body.appendChild(textArea); textArea.focus(); textArea.select();
+                try { document.execCommand('copy'); showToast("已複製到剪貼簿"); } catch (err) { showToast("複製失敗", "error"); }
+                document.body.removeChild(textArea);
+            };
+
+            // Auth Effect
             useEffect(() => {
-                if (!window.firebaseServices || !window.firebaseServices.auth) return;
-                const { auth, signInAnonymously, onAuthStateChanged } = window.firebaseServices;
-
-                const initAuth = async () => {
-                   try {
-                        await signInAnonymously(auth);
-                   } catch (error) {
-                       console.error("Auth failed", error);
-                   }
-                };
-                initAuth();
-
-                const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-                    setUser(currentUser);
+                if (!window.firebaseServices) return;
+                const { auth, db, onAuthStateChanged, doc, getDoc, updateDoc, setDoc, serverTimestamp, appId } = window.firebaseServices;
+                
+                const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+                    if (window.isRegistering) return;
+                    if (currentUser) {
+                        if (!currentUser.emailVerified) {
+                            setUser(null); setUserProfile(null); setGlobalView('auth'); setAuthLoading(false);
+                            return;
+                        }
+                        try {
+                            const profileRef = doc(db, 'artifacts', appId, 'public', 'data', 'user_profiles', currentUser.uid);
+                            const profileSnap = await getDoc(profileRef);
+                            let profileData = null;
+                            if (profileSnap.exists()) {
+                                profileData = profileSnap.data();
+                                await updateDoc(profileRef, { loginCount: (profileData.loginCount || 0) + 1 });
+                            } else {
+                                const isSupreme = currentUser.email.toLowerCase() === SUPREME_ADMIN_EMAIL.toLowerCase();
+                                profileData = { email: currentUser.email, realName: '未知', identity: '未知', role: isSupreme ? 'admin' : 'user', loginCount: 1, createdAt: serverTimestamp() };
+                                await setDoc(profileRef, profileData);
+                            }
+                            setUser(currentUser); setUserProfile(profileData); setGlobalView('app');
+                        } catch (err) { console.error("Profile fetch error:", err); }
+                    } else {
+                        setUser(null); setUserProfile(null); setGlobalView('auth');
+                    }
+                    setAuthLoading(false);
                 });
                 return () => unsubscribe();
             }, []);
 
-            // Fetch Saved Cases
+            // Data Effects
             useEffect(() => {
-                if (!user || !window.firebaseServices.db) return;
+                if (!user || globalView !== 'app' || !window.firebaseServices) return;
                 const { db, collection, onSnapshot, query, appId } = window.firebaseServices;
                 const q = query(collection(db, 'artifacts', appId, 'users', user.uid, 'saved_cases'));
-
                 const unsubscribe = onSnapshot(q, (snapshot) => {
-                    const cases = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    cases.sort((a, b) => {
-                        const timeA = a.createdAt?.seconds || 0;
-                        const timeB = b.createdAt?.seconds || 0;
-                        return timeB - timeA;
-                    });
+                    const cases = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    cases.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
                     setSavedCases(cases);
-                }, (err) => {
-                    console.error("Fetch error:", err);
                 });
-
                 return () => unsubscribe();
-            }, [user]);
+            }, [user, globalView]);
 
-            // Save Function
-            const handleSaveCase = async () => {
-                if (!user || !result) {
-                    alert("請先登入或生成內容");
-                    return;
-                }
-                
+            useEffect(() => {
+                if (globalView !== 'admin' || userProfile?.role !== 'admin' || !window.firebaseServices) return;
+                const { db, collection, onSnapshot, query, appId } = window.firebaseServices;
+                const usersQ = query(collection(db, 'artifacts', appId, 'public', 'data', 'user_profiles'));
+                const unsubUsers = onSnapshot(usersQ, (snap) => {
+                    const users = snap.docs.map(doc => ({ uid: doc.id, ...doc.data() }));
+                    users.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                    setAdminUsers(users);
+                });
+                const casesQ = query(collection(db, 'artifacts', appId, 'public', 'data', 'all_cases'));
+                const unsubCases = onSnapshot(casesQ, (snap) => {
+                    setAdminCases(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                });
+                return () => { unsubUsers(); unsubCases(); };
+            }, [globalView, userProfile]);
+
+            /* --- Core Functions --- */
+            
+            // 1. Generate Content
+            const generateContent = async () => {
+                if (!topic) { showToast("請輸入主題框架或問題點", "error"); return; }
+                const finalFws = [...selectedFrameworks];
+                if (isCustomSelected && customFramework.trim()) finalFws.push(customFramework.trim());
+                if (finalFws.length === 0) { showToast("請至少選擇一個專業框架或輸入自訂需求", "error"); return; }
+
+                setIsGenerating(true); setGenError(''); setGenResult(null);
+                setStatusMessage("連線至 Gemini 模型...");
+                setTimeout(() => setStatusMessage("正在調用 Google Search 即時檢索..."), 1500);
+                setTimeout(() => setStatusMessage("TONY 老師正在進行結構化思辨..."), 4000);
+
                 try {
-                    setIsSaving(true);
-                    const { db, collection, addDoc, serverTimestamp, appId } = window.firebaseServices;
+                    const systemPrompt = `You are an elite, senior Business Strategy and Digital Transformation Consultant (acting as TONY 老師).
+Your goal is to generate a highly actionable, structured, and realistic business case study and solution.
+
+**CRITICAL INSTRUCTIONS (MUST FOLLOW STRICTLY):**
+1. **NO GENERIC ADVICE:** Do not use fluff like "improve communication" or "align teams." You must provide specific, tactical, and implementable steps.
+2. **APPLY CONSULTING FRAMEWORKS:** When given a framework (e.g., Agile, Digital Marketing), you MUST demonstrate *how* to apply its specific tools (e.g., Sprints, User Personas, A/B Testing) to the specific problem.
+3. **MECE PRINCIPLE:** Your solution steps must be Mutually Exclusive and Collectively Exhaustive.
+4. **REAL-WORLD BUSINESS LOGIC:** The scenario must sound like a real company facing real budget, political, and market constraints.
+5. **OUTPUT FORMAT:** You MUST output ONLY valid JSON matching the exact schema below. Do not include markdown code blocks (like \`\`\`json) around the output.
+
+**JSON SCHEMA:**
+{
+  "scenario_case_study": {
+    "title": "String (Max 20 chars, punchy and professional)",
+    "story": "String (300-500 words. Describe the company, the specific business context, the stakeholders involved, and the dramatic, realistic conflict. Use Traditional Chinese.)",
+    "conflict_summary": "String (1-2 sentences summarizing the core business dilemma. Traditional Chinese.)"
+  },
+  "solution_and_framework": {
+    "applied_frameworks": ["String (List the frameworks you are applying)"],
+    "summary": "String (A high-level executive summary of your strategic approach. Traditional Chinese.)",
+    "detailed_steps": [
+      {
+        "step_title": "String (Action-oriented title, e.g., 'Phase 1: Diagnostic & Stakeholder Alignment')",
+        "content": "String (Provide HIGHLY SPECIFIC, actionable tactics. Name the tools, meetings, or KPIs required. Explain exactly *how* the framework solves the root cause. Use markdown for bolding. Traditional Chinese.)"
+      }
+    ],
+    "citation_needed": "String (If you referenced a specific theory or real-world case via search, list it here, else 'N/A')"
+  },
+  "video_outro": {
+    "golden_sentence": "String (Bilingual: Traditional Chinese and English. A powerful, inspiring closing statement summarizing the lesson. Approx 30-50 words.)"
+  },
+  "media_prompts": {
+    "image_prompt_chatgpt_image2_5": "String (English. A highly detailed visual description of the business scenario for ChatGPT image generation.)",
+    "video_prompt_gemini_omni": "String (English. Cinematic camera movement, subject, and style for Gemini Omni video generation.)",
+    "music_prompt_suno": "String (English. Genre, bpm, and mood for SUNO AI music generation.)"
+  }
+}`;
+
+                    const userPrompt = `Topic/Problem: ${topic}\nFrameworks to Apply: ${finalFws.join(', ')}\nRequirements:\n1. Use Traditional Chinese (繁體中文).\n2. Do not give generic advice; act like a McKinsey/BCG consultant providing a concrete tactical plan.`;
+
+                    const payload = {
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        tools: [{ google_search: {} }],
+                        safetySettings: [
+                            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                            { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+                        ]
+                    };
+
+                    const keyToUse = apiKey || ""; 
+                    const modelName = "gemini-3.8-flash"; 
                     
-                    const finalFrameworks = [...selectedFrameworks];
-                    if (isCustomSelected && customFramework.trim()) {
-                        finalFrameworks.push(customFramework.trim());
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${keyToUse}`, { 
+                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) 
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) throw new Error(data.error?.message || `API 發生錯誤 (狀態碼: ${response.status})`);
+                    if (!data.candidates || data.candidates.length === 0) throw new Error(`API 拒絕生成或沒有回傳內容 (FinishReason: ${data.candidates?.[0]?.finishReason || '未知'})\n\n原始回應：${JSON.stringify(data.usageMetadata || data)}`);
+                    
+                    const candidate = data.candidates[0];
+                    let rawText = candidate.content?.parts?.map(p => p.text).join('') || "";
+                    const startIdx = rawText.indexOf('{');
+                    const endIdx = rawText.lastIndexOf('}');
+                    
+                    if (startIdx !== -1 && endIdx !== -1) {
+                        const cleanJsonStr = rawText.substring(startIdx, endIdx + 1);
+                        setGenResult(JSON.parse(cleanJsonStr));
+                    } else { 
+                        throw new Error("無法從 AI 回應中找到 JSON 結構。");
                     }
+                } catch (err) { 
+                    console.error("Generate Error:", err);
+                    setGenError(err.message || "發生未知錯誤"); 
+                    showAlertModal("⛔ 生成失敗", `無法產出內容，詳細原因如下：\n\n${err.message}`, false, true);
+                } finally { 
+                    setIsGenerating(false); 
+                    setStatusMessage(''); 
+                }
+            };
+
+            // 2. Save Case
+            const handleSaveCase = async () => {
+                if (!user || !genResult) { showToast("無效的操作", "error"); return; }
+                setIsSaving(true);
+                try {
+                    const { db, collection, addDoc, serverTimestamp, appId, setDoc, doc } = window.firebaseServices;
+                    const finalFws = [...selectedFrameworks];
+                    if (isCustomSelected && customFramework.trim()) finalFws.push(customFramework.trim());
 
                     const caseData = {
-                        topic: topic,
-                        frameworks: finalFrameworks,
-                        result: result,
-                        createdAt: serverTimestamp()
+                        topic,
+                        frameworks: finalFws,
+                        result: genResult,
+                        createdAt: serverTimestamp(),
+                        userId: user.uid,
+                        authorName: userProfile?.realName || '未知'
                     };
 
                     await addDoc(collection(db, 'artifacts', appId, 'users', user.uid, 'saved_cases'), caseData);
-                    alert("✅ 案例已成功儲存到「我的案例庫」！");
+                    await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'all_cases')), caseData);
+
+                    showToast("✅ 成功儲存到案例庫！");
                 } catch (err) {
                     console.error("Save error:", err);
-                    alert("儲存失敗，請稍後再試。");
-                } finally {
-                    setIsSaving(false);
-                }
+                    showToast("儲存失敗", "error");
+                } finally { setIsSaving(false); }
             };
 
-            // Delete Function
-            const handleDeleteCase = async (docId, e) => {
-                e.stopPropagation();
-                if (!confirm("確定要刪除這個案例嗎？")) return;
-                
-                try {
-                    const { db, doc, deleteDoc, appId } = window.firebaseServices;
-                    await deleteDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'saved_cases', docId));
-                } catch (err) {
-                    console.error("Delete error:", err);
-                    alert("刪除失敗");
-                }
-            };
-
-            // View (Load) Function
-            const handleViewCase = (savedCase) => {
-                setTopic(savedCase.topic);
-                setResult(savedCase.result);
-                setView('generator');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-
-            // Filtered Cases
-            const filteredSavedCases = useMemo(() => {
-                if (!searchQuery) return savedCases;
-                const lowerQ = searchQuery.toLowerCase();
-                return savedCases.filter(c => 
-                    (c.topic && c.topic.toLowerCase().includes(lowerQ)) ||
-                    (c.result.scenario_case_study.title && c.result.scenario_case_study.title.toLowerCase().includes(lowerQ)) ||
-                    (c.frameworks && c.frameworks.some(f => f.toLowerCase().includes(lowerQ)))
-                );
-            }, [savedCases, searchQuery]);
-
-
-            // --- General Handlers ---
-            useEffect(() => {
-                const storedKey = getApiKey();
-                if (storedKey) setApiKey(storedKey);
-                else setShowKeyInput(true);
-
-                // Cleanup speech on unmount
-                return () => {
-                    if ('speechSynthesis' in window) {
-                        window.speechSynthesis.cancel();
-                    }
-                };
-            }, []);
-
-            // Stop speech when view changes
-            useEffect(() => {
-                if (isSpeaking) {
-                    handleStopSpeak();
-                }
-            }, [view]);
-
-            const handleFrameworkToggle = (fw) => {
-                if (selectedFrameworks.includes(fw)) {
-                    setSelectedFrameworks(selectedFrameworks.filter(f => f !== fw));
-                } else {
-                    setSelectedFrameworks([...selectedFrameworks, fw]);
-                }
-            };
-
-            // TTS Handlers
-            const handleSpeak = (text) => {
-                if ('speechSynthesis' in window) {
-                    // Cancel current speech if any
-                    window.speechSynthesis.cancel();
-                    
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'zh-TW'; // Force Traditional Chinese
-                    utterance.rate = 1; // Normal speed
-                    utterance.pitch = 1;
-
-                    utterance.onstart = () => setIsSpeaking(true);
-                    utterance.onend = () => setIsSpeaking(false);
-                    utterance.onerror = (e) => {
-                        console.error("Speech error", e);
-                        setIsSpeaking(false);
-                    };
-
-                    window.speechSynthesis.speak(utterance);
-                    speechRef.current = utterance;
-                } else {
-                    alert("您的瀏覽器不支援朗讀功能");
-                }
-            };
-
-            const handleStopSpeak = () => {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    setIsSpeaking(false);
-                }
-            };
-
-            const toggleSpeech = (text) => {
-                if (isSpeaking) {
-                    handleStopSpeak();
-                } else {
-                    handleSpeak(text);
-                }
-            };
-
-            const handleCopy = (text, label) => {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text)
-                        .then(() => alert(`已複製 ${label} 到剪貼簿！`))
-                        .catch(err => fallbackCopyTextToClipboard(text, label));
-                } else {
-                    fallbackCopyTextToClipboard(text, label);
-                }
-            };
-
-            const fallbackCopyTextToClipboard = (text, label) => {
-                try {
-                    const textArea = document.createElement("textarea");
-                    textArea.value = text;
-                    textArea.style.position = "fixed";
-                    textArea.style.left = "-9999px";
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    const successful = document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    if (successful) alert(`已複製 ${label} 到剪貼簿！`);
-                } catch (err) {
-                    alert(`複製失敗，請手動複製 ${label}。`);
-                }
-            };
-
+            // 3. Export Word
             const handleExportWord = () => {
-                if (!result) return;
-                const { scenario_case_study, solution_and_framework, video_outro } = result;
-                const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-                
-                const outroHtml = video_outro ? `
-                    <h2>3. 影片結尾金句 (Video Outro)</h2>
-                    <p style="background-color: #f8fafc; padding: 10px; font-style: italic; border-left: 4px solid #f59e0b;">
-                        ${video_outro.golden_sentence.replace(/\n/g, '<br/>')}
-                    </p>
-                ` : '';
-
+                if (!genResult) return;
+                const { scenario_case_study, solution_and_framework, video_outro } = genResult;
                 const contentHTML = `
                     <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                     <head><meta charset='utf-8'><title>${scenario_case_study.title}</title>
@@ -424,341 +419,456 @@
                     <h3>詳細步驟：</h3>
                     ${solution_and_framework.detailed_steps.map(step => `<div><h4>${step.step_title}</h4><p>${step.content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br/>')}</p></div>`).join('')}
                     ${solution_and_framework.citation_needed ? `<p><em>資料參考：${solution_and_framework.citation_needed}</em></p>` : ''}
-                    
-                    ${outroHtml}
-                    
+                    ${video_outro ? `<h2>3. 影片結尾金句</h2><p style="background-color: #f8fafc; padding: 10px; font-style: italic; border-left: 4px solid #f59e0b;">${video_outro.golden_sentence.replace(/\n/g, '<br/>')}</p>` : ''}
                     <div class="footer"><p>© 2026 TONY STUDIO. 本教材由 TONY STUDIO 楊文澤顧問設計.</p></div>
                     </body></html>
                 `;
                 const blob = new Blob(['\ufeff', contentHTML], { type: 'application/msword' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `情境案例解方_${topic}_${dateStr}.doc`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+                link.download = `情境案例解方_${scenario_case_study.title}.doc`;
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
             };
 
-            const generateContent = async () => {
-                if (!apiKey) { setError("請先輸入 API Key"); setShowKeyInput(true); return; }
-                if (!topic) { setError("請輸入主題框架或問題點"); return; }
-                
-                const finalFrameworks = [...selectedFrameworks];
-                if (isCustomSelected && customFramework.trim()) finalFrameworks.push(customFramework.trim());
-                if (finalFrameworks.length === 0) { setError("請至少選擇一個專業框架或輸入自訂需求"); return; }
+            // 4. TTS (Speech)
+            const toggleSpeech = (text) => {
+                if (!('speechSynthesis' in window)) { showToast("瀏覽器不支援語音", "error"); return; }
+                if (isSpeaking) {
+                    window.speechSynthesis.cancel();
+                    setIsSpeaking(false);
+                } else {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'zh-TW';
+                    utterance.onend = () => setIsSpeaking(false);
+                    utterance.onerror = () => setIsSpeaking(false);
+                    setIsSpeaking(true);
+                    window.speechSynthesis.speak(utterance);
+                }
+            };
 
-                setIsLoading(true); setError(''); setResult(null);
-                setStatusMessage("正在連結 gemini-2.5-flash 模型...");
-                setTimeout(() => setStatusMessage("正在調用 Google Search 即時檢索..."), 2000);
-                setTimeout(() => setStatusMessage("TONY 老師正在進行結構化思辨..."), 5000);
+            useEffect(() => {
+                return () => { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); };
+            }, [globalView, appTab]);
 
-                const callGeminiAPI = async (useSearch = true) => {
-                    const systemPrompt = `You are an expert AI assistant for Tony Yang (TONY 老師), a senior Digital Marketing and AI consultant. Your Goal: Generate a high-quality teaching case study and multimedia prompts. Constraint: Output MUST be a valid JSON object strictly following this schema. Do not output markdown code blocks. 
-                    Schema: { 
-                        "scenario_case_study": { "title": "String (Max 20 chars)", "story": "String (300-500 words, dramatic, business context, Traditional Chinese)", "conflict_summary": "String (Traditional Chinese)" }, 
-                        "solution_and_framework": { "applied_frameworks": ["String"], "summary": "String (Traditional Chinese)", "detailed_steps": [ { "step_title": "String", "content": "String (Use markdown for bolding, Traditional Chinese)" } ], "citation_needed": "String (Source or Keyword if search used, else N/A)" }, 
-                        "video_outro": { "golden_sentence": "String (Bilingual: Traditional Chinese and English. A powerful, inspiring closing statement summarizing the lesson. Approx 30-50 words.)" },
-                        "media_prompts": { "image_prompt_nanobanana_pro": "String (English, highly detailed visual description)", "video_prompt_sora2": "String (English, cinematic camera movement, style)", "music_prompt_suno": "String (English, genre, bpm, mood)" } 
-                    }`;
-                    const userPrompt = `Topic: ${topic}\nFrameworks to Apply: ${finalFrameworks.join(', ')}\nRequirements:\n1. Use Traditional Chinese (繁體中文).\n2. Ground the solution in real-world business logic.`;
-                    const payload = { systemInstruction: { parts: [{ text: systemPrompt }] }, contents: [{ parts: [{ text: userPrompt }] }], generationConfig: { responseMimeType: "application/json" } };
-                    if (useSearch) payload.tools = [{ google_search: {} }];
-                    
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                    return await response.json();
+            // 5. Library Handlers
+            const filteredSavedCases = useMemo(() => {
+                if (!searchQuery) return savedCases;
+                const lowerQ = searchQuery.toLowerCase();
+                return savedCases.filter(c =>
+                    (c.topic && c.topic.toLowerCase().includes(lowerQ)) ||
+                    (c.result?.scenario_case_study?.title && c.result.scenario_case_study.title.toLowerCase().includes(lowerQ)) ||
+                    (c.frameworks && c.frameworks.some(f => f.toLowerCase().includes(lowerQ)))
+                );
+            }, [savedCases, searchQuery]);
+
+            const handleViewCase = (item) => {
+                setTopic(item.topic || '');
+                setGenResult(item.result);
+                setAppTab('generator');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            const handleDeleteCase = async (id, e) => {
+                e.stopPropagation();
+                if (!confirm("確定要刪除此案例嗎？")) return;
+                try {
+                    const { db, doc, deleteDoc, appId } = window.firebaseServices;
+                    await deleteDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'saved_cases', id));
+                    showToast("已刪除案例");
+                } catch (err) { showToast("刪除失敗", "error"); }
+            };
+
+            // 6. Admin Handlers
+            const exportCSV = () => {
+                let csvContent = "\ufeff"; 
+                csvContent += "電子信箱,真實姓名,身分,權限,登入次數,註冊時間\n";
+                adminUsers.forEach(u => {
+                    const date = u.createdAt ? new Date(u.createdAt.seconds * 1000).toLocaleString() : 'N/A';
+                    csvContent += `"${u.email}","${u.realName}","${u.identity}","${u.role}",${u.loginCount},"${date}"\n`;
+                });
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a"); link.href = URL.createObjectURL(blob); 
+                link.download = `TONY_Users_${new Date().toISOString().slice(0,10)}.csv`;
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            };
+
+            const toggleUserRole = async (targetUser) => {
+                if (targetUser.email.toLowerCase() === SUPREME_ADMIN_EMAIL.toLowerCase()) { showToast("最高管理員無法被降級", "error"); return; }
+                try {
+                    const { db, doc, updateDoc, appId } = window.firebaseServices;
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'user_profiles', targetUser.uid), { role: targetUser.role === 'admin' ? 'user' : 'admin' });
+                    showToast(`已更新權限：${targetUser.realName}`);
+                } catch (e) { showToast("權限更新失敗", "error"); }
+            };
+
+            const confirmDeleteUser = async (targetUser) => {
+                try {
+                    const { db, doc, deleteDoc, appId } = window.firebaseServices;
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'user_profiles', targetUser.uid));
+                    showToast(`已移除用戶：${targetUser.realName}`);
+                } catch (e) { showToast("刪除失敗", "error"); }
+                finally { setModal({ show: false }); }
+            };
+
+            const generateAdminReport = async () => {
+                if (!reportStartDate || !reportEndDate) { showToast("請選擇起訖日期", "warning"); return; }
+                const start = new Date(reportStartDate).getTime();
+                const end = new Date(reportEndDate).getTime() + 86399999; 
+                const filteredCases = adminCases.filter(c => {
+                    const t = c.createdAt ? c.createdAt.seconds * 1000 : 0;
+                    return t >= start && t <= end;
+                });
+                if (filteredCases.length === 0) { showToast("此區間無任何生成紀錄", "warning"); return; }
+
+                setIsGeneratingReport(true); setReportResult(null);
+                const statsStr = filteredCases.map(c => `框架:${c.frameworks.join(',')}|主題:${c.topic}`).join('\n');
+                try {
+                    const payload = { 
+                        systemInstruction: { parts: [{ text: "你是專業的商業數據分析師。根據用戶提供的「歷史生成紀錄摘要」，產出一份繁體中文的『AI 使用趨勢與痛點分析報告』。請使用 Markdown 排版，包含：1.整體生成數量與最受歡迎框架 2.核心問題/痛點趨勢分析 3.給 TONY 老師的課程開發建議。" }] }, 
+                        contents: [{ parts: [{ text: `Date Range: ${reportStartDate} to ${reportEndDate}\nTotal Cases: ${filteredCases.length}\nData:\n${statsStr}` }] }] 
+                    };
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey || ""}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error("API Failed");
+                    const data = await response.json();
+                    setReportResult(data.candidates[0].content.parts.map(p=>p.text).join(''));
+                    showToast("分析報告生成完畢！");
+                } catch (err) { showToast("報告生成失敗", "error"); }
+                finally { setIsGeneratingReport(false); }
+            };
+
+            const exportReportWord = () => {
+                if (!reportResult) return;
+                const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>AI 分析報告</title><style>body { font-family: 'Microsoft JhengHei', sans-serif; line-height: 1.6; } h1, h2, h3 { color: #1e293b; }</style></head><body><h1>TONY SaaS 商業數據 AI 分析報告</h1><p><strong>統計期間：</strong>${reportStartDate} ~ ${reportEndDate}</p><hr/><div>${reportResult.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br/>')}</div></body></html>`;
+                const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+                const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+                link.download = `商業分析報告_${reportStartDate}_${reportEndDate}.doc`;
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            };
+
+            const handleLogout = async () => {
+                await window.firebaseServices.signOut(window.firebaseServices.auth);
+                setGlobalView('auth');
+            };
+
+            const applyExample = (topicText, fws) => {
+                setTopic(topicText); setSelectedFrameworks(fws); setIsCustomSelected(false); setCustomFramework('');
+                showToast("💡 示範案例已套用，請點擊「開始生成案例」！", "success");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            /* --- Auth Component --- */
+            const AuthComponent = () => {
+                const [mode, setMode] = useState('login'); 
+                const [email, setEmail] = useState('');
+                const [password, setPassword] = useState('');
+                const [showPwd, setShowPwd] = useState(false);
+                const [realName, setRealName] = useState('');
+                const [identity, setIdentity] = useState('TONY老師學員');
+                const [authProcess, setAuthProcess] = useState(false);
+
+                const handleAuth = async (e) => {
+                    e.preventDefault();
+                    setAuthProcess(true);
+                    const { auth, db, appId, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut, setDoc, doc, serverTimestamp } = window.firebaseServices;
+
+                    try {
+                        if (mode === 'register') {
+                            if (!realName.trim()) throw new Error("請填寫真實姓名");
+                            if (password.length < 6) throw new Error("密碼長度至少 6 碼");
+                            window.isRegistering = true; 
+                            
+                            const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                            const newUser = userCred.user;
+                            const isSupreme = email.toLowerCase() === SUPREME_ADMIN_EMAIL.toLowerCase();
+                            
+                            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'user_profiles', newUser.uid), {
+                                email: newUser.email, realName, identity, role: isSupreme ? 'admin' : 'user', loginCount: 0, createdAt: serverTimestamp()
+                            });
+
+                            await sendEmailVerification(newUser);
+                            await signOut(auth); 
+                            window.isRegistering = false; 
+                            setMode('login');
+                            showAlertModal("🎉 註冊成功，請驗證信箱", `驗證信已發送至：\n${email}\n\n⚠️ 溫馨提醒：請前往信箱點擊驗證連結後即可登入。若未在收件匣看到，請檢查「垃圾郵件匣」或「促銷內容」。`, true);
+
+                        } else if (mode === 'login') {
+                            const userCred = await signInWithEmailAndPassword(auth, email, password);
+                            if (!userCred.user.emailVerified) {
+                                await signOut(auth);
+                                showAlertModal("⛔ 登入失敗：信箱尚未驗證", `我們已將驗證信發送至：\n${email}\n\n⚠️ 請前往信箱點擊驗證連結後再試。若未在收件匣看到，請檢查「垃圾郵件匣」。`, false, true);
+                            }
+                        } else if (mode === 'forgot') {
+                            await sendPasswordResetEmail(auth, email);
+                            setMode('login');
+                            showAlertModal("📧 密碼重設信已寄出", `重設連結已發送至：\n${email}\n\n⚠️ 若未在收件匣看到，請檢查「垃圾郵件匣」。`, true);
+                        }
+                    } catch (err) {
+                        window.isRegistering = false; 
+                        let msg = "發生錯誤";
+                        if (err.code === 'auth/email-already-in-use') msg = "此信箱已註冊過";
+                        else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') msg = "帳號或密碼錯誤";
+                        else if (err.code === 'auth/user-not-found') msg = "找不到此帳號";
+                        else msg = err.message;
+                        showToast(msg, "error");
+                    } finally { setAuthProcess(false); }
                 };
 
-                try {
-                    let data;
-                    try { data = await callGeminiAPI(true); } 
-                    catch (e) { 
-                        if (e.message.includes('400') || e.message.includes('INVALID_ARGUMENT')) { setStatusMessage("搜尋異常，切換至純生成模式..."); data = await callGeminiAPI(false); } 
-                        else throw e; 
-                    }
-                    if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                        setResult(JSON.parse(data.candidates[0].content.parts[0].text));
-                    } else throw new Error("無法解析 AI 回傳的資料");
-                } catch (err) { setError(err.message || "發生未知錯誤"); } 
-                finally { setIsLoading(false); setStatusMessage(''); }
+                return (
+                    <div className="min-h-screen flex items-center justify-center auth-bg p-4 relative">
+                        <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md fade-in border border-slate-200">
+                            <div className="text-center mb-8">
+                                <div className="h-16 w-16 mx-auto bg-black rounded-xl shadow-md mb-4 flex items-center justify-center"><i className="fas fa-layer-group text-3xl text-amber-500"></i></div>
+                                <h2 className="text-2xl font-black text-slate-800 tracking-tight">TONY 老師教案系統</h2>
+                                <p className="text-slate-500 mt-2 text-sm">{mode === 'login' ? '登入以繼續使用系統' : mode === 'register' ? '建立專屬教案帳號' : '重設您的密碼'}</p>
+                            </div>
+                            <form onSubmit={handleAuth} className="space-y-5">
+                                {mode === 'register' && (
+                                    <>
+                                        <div><label className="block text-sm font-bold text-slate-700 mb-1">真實姓名</label><div className="relative"><i className="fas fa-user absolute left-3 top-3 text-slate-400"></i><input type="text" required value={realName} onChange={e=>setRealName(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none" placeholder="請填寫本名"/></div></div>
+                                        <div><label className="block text-sm font-bold text-slate-700 mb-1">學員身分</label><select value={identity} onChange={e=>setIdentity(e.target.value)} className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none bg-white"><option value="TONY老師學員">TONY老師學員</option><option value="非學員(一般訪客)">非學員 (一般訪客)</option></select></div>
+                                    </>
+                                )}
+                                <div><label className="block text-sm font-bold text-slate-700 mb-1">電子信箱</label><div className="relative"><i className="fas fa-envelope absolute left-3 top-3 text-slate-400"></i><input type="email" required value={email} onChange={e=>setEmail(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none" placeholder="name@example.com"/></div></div>
+                                {mode !== 'forgot' && (
+                                    <div><label className="block text-sm font-bold text-slate-700 mb-1">密碼</label><div className="relative"><i className="fas fa-lock absolute left-3 top-3 text-slate-400"></i><input type={showPwd?"text":"password"} required value={password} onChange={e=>setPassword(e.target.value)} className="w-full pl-10 pr-10 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none" placeholder="至少 6 碼" minLength="6"/><button type="button" onClick={()=>setShowPwd(!showPwd)} className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"><i className={`fas ${showPwd?'fa-eye-slash':'fa-eye'}`}></i></button></div></div>
+                                )}
+                                <button type="submit" disabled={authProcess} className="w-full py-3 bg-gradient-to-r from-slate-900 to-black text-white font-bold rounded-lg hover:from-amber-500 hover:to-amber-600 transition shadow-lg flex justify-center items-center">
+                                    {authProcess ? <i className="fas fa-spinner fa-spin"></i> : mode === 'login' ? '登 入' : mode === 'register' ? '註 冊 帳 號' : '發送重設信件'}
+                                </button>
+                            </form>
+                            <div className="mt-6 text-center space-y-3 text-sm font-medium">
+                                {mode === 'login' ? (
+                                    <><p className="text-slate-500">還沒有帳號？ <button onClick={() => setMode('register')} className="text-amber-600 hover:underline">立即註冊</button></p><p><button onClick={() => setMode('forgot')} className="text-slate-400 hover:text-slate-600 transition">忘記密碼？</button></p></>
+                                ) : mode === 'register' ? (
+                                    <p className="text-slate-500">已有帳號？ <button onClick={() => setMode('login')} className="text-amber-600 hover:underline">返回登入</button></p>
+                                ) : (
+                                    <p className="text-slate-500"><button onClick={() => setMode('login')} className="text-amber-600 hover:underline">返回登入</button></p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
             };
 
-            // --- Render ---
-            return (
-                <div className="min-h-screen flex flex-col">
-                    {/* Header */}
-                    <header className="bg-black border-b border-gray-800 sticky top-0 z-50 shadow-sm">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-                            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setView('generator')}>
-                                <img src="https://i.postimg.cc/fT2sQW09/1.png" alt="Logo" className="h-10 w-10 rounded-md" />
-                                <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">情境故事案例產生器</h1>
-                                <h1 className="text-xl font-bold text-white tracking-wide sm:hidden">TONY 產生器</h1>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                {/* Navigation Tabs */}
-                                <nav className="flex space-x-2">
-                                    <button 
-                                        onClick={() => setView('generator')}
-                                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${view === 'generator' ? 'bg-amber-500 text-black' : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}
-                                    >
-                                        <i className="fas fa-magic mr-1.5"></i> 生成器
-                                    </button>
-                                    <button 
-                                        onClick={() => setView('library')}
-                                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${view === 'library' ? 'bg-amber-500 text-black' : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}
-                                    >
-                                        <i className="fas fa-book mr-1.5"></i> 我的案例庫
-                                    </button>
-                                </nav>
+            if (authLoading) return <div className="min-h-screen flex items-center justify-center bg-slate-900"><div className="loader"></div></div>;
+            if (globalView === 'auth') return <><AuthComponent /><Modal {...modal} /><Toast {...toast} /></>;
 
-                                <button onClick={() => setShowKeyInput(!showKeyInput)} className={`p-2 rounded-full transition-colors ${apiKey ? 'text-green-400' : 'text-red-500 bg-white'}`} title="設定 API Key">
-                                    <i className={`fas fa-key ${apiKey ? '' : 'fa-bounce'}`}></i>
-                                </button>
+            return (
+                <div className="min-h-screen flex flex-col relative">
+                    <Toast {...toast} />
+                    <Modal {...modal} />
+
+                    <header className="bg-black border-b border-gray-800 sticky top-0 z-40 shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+                            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setGlobalView('app')}>
+                                <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1785039560457_1.png?alt=media&token=19b27497-4101-4436-bc80-b299741b7984" alt="TONY Logo" className="h-10 w-10 object-contain rounded-md bg-white border border-gray-700" />
+                                <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">情境故事案例產生器 <span className="text-xs text-amber-500 font-normal align-top border border-amber-500 px-1 rounded ml-1">SaaS 版</span></h1>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                                {globalView === 'app' && (
+                                    <nav className="hidden md:flex space-x-2 mr-2">
+                                        <button onClick={() => setAppTab('generator')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${appTab === 'generator' ? 'bg-amber-500 text-black' : 'text-gray-300 hover:text-white'}`}><i className="fas fa-magic mr-1"></i> 生成器</button>
+                                        <button onClick={() => setAppTab('library')} className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${appTab === 'library' ? 'bg-amber-500 text-black' : 'text-gray-300 hover:text-white'}`}><i className="fas fa-book mr-1"></i> 我的案例</button>
+                                    </nav>
+                                )}
+                                {userProfile?.role === 'admin' && (
+                                    <button onClick={() => setGlobalView(globalView === 'admin' ? 'app' : 'admin')} className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-md transition font-medium flex items-center"><i className={`fas ${globalView === 'admin' ? 'fa-home' : 'fa-chart-line'} mr-1.5`}></i> <span className="hidden sm:inline">{globalView === 'admin' ? '返回系統' : '管理後台'}</span></button>
+                                )}
+                                <button onClick={() => setShowKeyInput(!showKeyInput)} className={`p-2 rounded-full transition ${apiKey ? 'text-green-400' : 'text-slate-400'}`} title="API Key"><i className="fas fa-key"></i></button>
+                                <div className="h-6 w-px bg-gray-700 mx-1"></div>
+                                <div className="text-white text-sm font-medium flex items-center hidden lg:flex"><i className="fas fa-user-circle text-amber-500 mr-2 text-lg"></i>{userProfile?.realName}</div>
+                                <button onClick={handleLogout} className="text-slate-400 hover:text-red-400 transition ml-2" title="登出"><i className="fas fa-sign-out-alt text-lg"></i></button>
                             </div>
                         </div>
                         {showKeyInput && (
                             <div className="bg-gray-900 border-b border-gray-700 p-4 absolute w-full shadow-md z-40">
-                                <div className="max-w-2xl mx-auto flex gap-2">
-                                    <input type="password" placeholder="輸入 Google Gemini API Key" className="flex-1 p-2 border border-gray-600 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-amber-500 outline-none" value={apiKey} onChange={(e) => { setApiKey(e.target.value); saveApiKey(e.target.value); }} />
-                                    <button onClick={() => setShowKeyInput(false)} className="px-4 py-2 bg-amber-500 text-black font-bold rounded-md hover:bg-amber-400">儲存</button>
+                                <div className="max-w-2xl mx-auto flex flex-col gap-2">
+                                    <div className="flex gap-2">
+                                        <input type="password" placeholder="輸入 API Key (選填)" className="flex-1 p-2 border border-gray-600 bg-gray-800 text-white rounded-md focus:ring-amber-500 outline-none" value={apiKey} onChange={(e) => { setApiKey(e.target.value); sessionStorage.setItem('GEMINI_API_KEY', e.target.value); }} />
+                                        <button onClick={() => setShowKeyInput(false)} className="px-4 py-2 bg-amber-500 text-black font-bold rounded-md hover:bg-amber-400 transition">儲存</button>
+                                    </div>
+                                    <div className="text-xs text-gray-400 flex items-center mt-1"><i className="fas fa-info-circle mr-1.5"></i>尚未擁有金鑰？<a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 ml-1 underline transition">前往 Google 申請</a></div>
                                 </div>
-                                <div className="max-w-2xl mx-auto mt-2 text-xs text-gray-400"><a href="https://aistudio.google.com/app/apikey" target="_blank" className="underline hover:text-amber-400">沒有 Key? 獲取</a></div>
                             </div>
                         )}
                     </header>
 
-                    {/* Main Content */}
-                    <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-                        
+                    <main className="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
                         {/* VIEW: GENERATOR */}
-                        {view === 'generator' && (
+                        {globalView === 'app' && appTab === 'generator' && (
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 fade-in">
-                                {/* Left Column */}
                                 <div className="lg:col-span-4 space-y-6">
                                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                        <div className="bg-black px-4 py-3 border-b border-gray-800">
-                                            <h2 className="text-white font-medium flex items-center"><i className="fas fa-pen-fancy mr-2 text-amber-500"></i> 設定教材主題</h2>
-                                        </div>
+                                        <div className="bg-black px-4 py-3 border-b border-gray-800"><h2 className="text-white font-medium flex items-center"><i className="fas fa-pen-fancy mr-2 text-amber-500"></i> 設定教材主題</h2></div>
                                         <div className="p-4 space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-slate-700 mb-1">主題框架 / 問題點</label>
                                                 <textarea className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none h-32 resize-none" placeholder="例如：傳產轉型電商時，老員工抗拒..." value={topic} onChange={(e) => setTopic(e.target.value)}></textarea>
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-slate-700 mb-2">選擇 TONY 老師專業解方</label>
-                                                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 border border-slate-100 rounded-lg p-2 bg-slate-50">
+                                                <label className="block text-sm font-medium text-slate-700 mb-2">選擇 TONY 老師專業解方 (可複選)</label>
+                                                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 bg-slate-50 border border-slate-100 rounded-lg p-2">
                                                     {EXPERT_FRAMEWORKS.map((fw, idx) => (
                                                         <label key={idx} className="flex items-center space-x-2 cursor-pointer hover:bg-white p-1 rounded transition">
-                                                            <input type="checkbox" className="rounded text-amber-500 focus:ring-amber-500 h-4 w-4" checked={selectedFrameworks.includes(fw)} onChange={() => handleFrameworkToggle(fw)} />
+                                                            <input type="checkbox" className="rounded text-amber-500 focus:ring-amber-500 h-4 w-4" checked={selectedFrameworks.includes(fw)} onChange={() => setSelectedFrameworks(prev => prev.includes(fw) ? prev.filter(f => f !== fw) : [...prev, fw])} />
                                                             <span className="text-sm text-slate-600">{fw}</span>
                                                         </label>
                                                     ))}
                                                     <div className="pt-2 mt-2 border-t border-slate-200">
-                                                        <label className="flex items-center space-x-2 cursor-pointer hover:bg-white p-1 rounded transition">
-                                                            <input type="checkbox" className="rounded text-amber-500 focus:ring-amber-500 h-4 w-4" checked={isCustomSelected} onChange={() => setIsCustomSelected(!isCustomSelected)} />
-                                                            <span className="text-sm font-medium text-slate-700">其他 (自訂補充需求)</span>
-                                                        </label>
-                                                        {isCustomSelected && (
-                                                            <div className="mt-2 pl-6 animate-fadeIn">
-                                                                <input type="text" className="w-full p-2 border border-slate-300 rounded focus:ring-1 focus:ring-amber-500 outline-none text-sm" placeholder="請輸入自訂框架或特殊需求..." value={customFramework} onChange={(e) => setCustomFramework(e.target.value)} />
-                                                            </div>
-                                                        )}
+                                                        <label className="flex items-center space-x-2 cursor-pointer hover:bg-white p-1 rounded transition"><input type="checkbox" className="rounded text-amber-500 h-4 w-4" checked={isCustomSelected} onChange={() => setIsCustomSelected(!isCustomSelected)} /><span className="text-sm font-medium text-slate-700">其他 (自訂補充需求)</span></label>
+                                                        {isCustomSelected && <input type="text" className="w-full p-2 border border-slate-300 rounded mt-2 text-sm outline-none focus:ring-1 focus:ring-amber-500" placeholder="請輸入自訂框架..." value={customFramework} onChange={(e) => setCustomFramework(e.target.value)} />}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button onClick={generateContent} disabled={isLoading} className={`w-full py-3 rounded-lg font-bold text-white shadow-md transition-all transform hover:-translate-y-0.5 ${isLoading ? 'bg-slate-400 cursor-not-allowed' : 'bg-black hover:bg-gray-800'}`}>
-                                                {isLoading ? <span className="flex items-center justify-center"><i className="fas fa-circle-notch fa-spin mr-2"></i> 生成中...</span> : <span className="flex items-center justify-center"><i className="fas fa-magic mr-2 text-amber-400"></i> 開始生成案例</span>}
-                                            </button>
-                                            {error && <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 flex items-start"><i className="fas fa-exclamation-circle mt-0.5 mr-2"></i>{error}</div>}
                                         </div>
+                                        <button onClick={generateContent} disabled={isGenerating} className={`w-full py-3 font-bold text-white transition ${isGenerating ? 'bg-slate-400' : 'bg-black hover:bg-gray-800'}`}>
+                                            {isGenerating ? <span><i className="fas fa-circle-notch fa-spin mr-2"></i> 生成中...</span> : <span><i className="fas fa-magic mr-2 text-amber-400"></i> 開始生成案例</span>}
+                                        </button>
                                     </div>
-                                    {/* Profile */}
-                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
-                                        <img src="https://i.postimg.cc/Gh8Zt7SX/S_56844323.jpg" alt="TONY 老師" className="w-24 h-24 rounded-full border-4 border-amber-500 shadow-md mb-4 object-cover" />
-                                        <h3 className="text-lg font-bold text-slate-800">TONY 楊文澤 老師</h3>
-                                        <p className="text-sm text-amber-600 font-medium mb-2">資深數位行銷科技顧問 | 講師</p>
-                                        <div className="flex space-x-3 text-slate-400"><i className="fab fa-facebook text-lg"></i><i className="fab fa-linkedin text-lg"></i><i className="fas fa-envelope text-lg"></i></div>
+
+                                    {/* Profile Card */}
+                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+                                        <div className="bg-black px-4 py-3 border-b border-gray-800">
+                                            <h2 className="text-white font-medium flex items-center"><i className="fas fa-user-tie mr-2 text-amber-500"></i> 關於 TONY 顧問</h2>
+                                        </div>
+                                        <div className="p-5 flex flex-col items-center border-b border-slate-100">
+                                            <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1787580326393_ChatGPT%20Image%202026%E5%B9%B46%E6%9C%8819%E6%97%A5%20%E4%B8%8A%E5%8D%8811_16_14.png?alt=media&token=3c85de41-f36f-46e5-a97a-7bc7eb83a027" alt="TONY 楊文澤 老師" className="w-24 h-24 rounded-full border-2 border-amber-500 shadow-md mb-3 object-cover" />
+                                            <h3 className="text-lg font-black text-slate-800">TONY 楊文澤 老師</h3>
+                                            <p className="text-sm text-slate-500 font-medium text-center mt-1">資深數位行銷科技顧問<br/>生成式 AI 創作者 | 創業導師</p>
+                                        </div>
+                                        <div className="p-5 text-sm text-slate-600 space-y-5 max-h-[400px] overflow-y-auto">
+                                            <div>
+                                                <h4 className="font-bold text-amber-600 mb-2 border-b border-slate-100 pb-1"><i className="fas fa-briefcase mr-1.5"></i>現職 Current</h4>
+                                                <ul className="space-y-1.5 pl-1">
+                                                    <li>▪ 龍華科大 數位行銷講師</li>
+                                                    <li>▪ 智策慧 品牌行銷科技顧問</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-amber-600 mb-2 border-b border-slate-100 pb-1"><i className="fas fa-history mr-1.5"></i>經歷 Experience</h4>
+                                                <ul className="space-y-1.5 pl-1">
+                                                    <li>▪ 脈動心聯股份有限公司 創辦人暨執行長</li>
+                                                    <li>▪ 宏碁集團建碁 AOPEN 整合營銷處處長 / 全球品牌行銷總監 / 企業發言人</li>
+                                                    <li>▪ 台灣數位看板多媒體聯盟 (DSMA) 副會長</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-amber-600 mb-2 border-b border-slate-100 pb-1"><i className="fas fa-graduation-cap mr-1.5"></i>學歷 Education</h4>
+                                                <ul className="space-y-1.5 pl-1">
+                                                    <li>▪ 台大 EMBA 商學組</li>
+                                                    <li>▪ 美國 Arizona State University 互動多媒體設計</li>
+                                                    <li>▪ 北科大 工業設計</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-amber-600 mb-2 border-b border-slate-100 pb-1"><i className="fas fa-chalkboard-teacher mr-1.5"></i>專家授課經歷</h4>
+                                                <ul className="space-y-1.5 pl-1">
+                                                    <li>▪ CPC 生產力中心 經營管理顧問師班 / 中小企業成長創價能量 講師</li>
+                                                    <li>▪ 台大 EMBA / 長榮 EMBA / 北科大 / 政大 / 世新 業師</li>
+                                                    <li>▪ 2021 MarTech 行銷科技行銷長認證班 講師</li>
+                                                    <li>▪ 2021/2024/2025 T大使與產業尖兵 講師</li>
+                                                    <li>▪ 2025 新光人壽 AI 工具應用 企業內訓講師</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Right Column: Result */}
                                 <div className="lg:col-span-8 space-y-6">
-                                    {isLoading && (
-                                        <div className="bg-white h-96 rounded-xl shadow-sm border border-slate-200 flex flex-col items-center justify-center p-8 text-center animate-pulse">
-                                            <div className="loader mb-6"></div><h3 className="text-lg font-semibold text-slate-700 mb-2">TONY AI 助手工作中</h3><p className="text-slate-500">{statusMessage}</p>
-                                        </div>
+                                    {isGenerating && (
+                                        <div className="bg-white h-96 rounded-xl shadow-sm flex flex-col justify-center items-center p-8 border border-slate-200"><div className="loader mb-6"></div><h3 className="text-lg font-semibold text-slate-700 animate-pulse">{statusMessage}</h3></div>
                                     )}
-                                    {!isLoading && !result && !error && (
-                                        <div className="bg-white h-full min-h-[400px] rounded-xl shadow-sm border border-slate-200 border-dashed flex flex-col items-center justify-center p-8 text-center opacity-75">
-                                            <i className="fas fa-layer-group text-6xl text-slate-200 mb-4"></i><p className="text-slate-500 text-lg">請在左側輸入主題並選擇框架，<br/>即可生成完整的教學案例。</p>
-                                        </div>
-                                    )}
-                                    {result && (
-                                        <>
-                                            {/* Action Bar for Result */}
-                                            <div className="flex justify-end mb-2 space-x-2">
-                                                 <button 
-                                                    onClick={handleSaveCase} 
-                                                    disabled={isSaving}
-                                                    className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg shadow-sm flex items-center text-sm font-medium transition"
-                                                >
-                                                    {isSaving ? <i className="fas fa-spinner fa-spin mr-2"></i> : <i className="fas fa-save mr-2"></i>}
-                                                    儲存到案例庫
-                                                </button>
-                                            </div>
-
-                                            {/* Story Card */}
-                                            <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
-                                                <div className="bg-black px-6 py-4 border-b border-gray-800 flex justify-between items-center">
-                                                    <div className="flex items-center space-x-3">
-                                                        <h3 className="font-bold text-white text-lg"><span className="text-amber-500 mr-2">●</span>{result.scenario_case_study.title}</h3>
-                                                        <button 
-                                                            onClick={() => toggleSpeech(result.scenario_case_study.story)}
-                                                            className={`text-sm px-2 py-1 rounded transition flex items-center ${isSpeaking ? 'bg-red-500 text-white pulse-ring' : 'bg-gray-700 text-gray-200 hover:bg-gray-600'}`}
-                                                            title={isSpeaking ? "停止朗讀" : "朗讀故事"}
-                                                        >
-                                                            {isSpeaking ? (
-                                                                <><i className="fas fa-stop-circle mr-1"></i> 停止</>
-                                                            ) : (
-                                                                <><i className="fas fa-volume-up mr-1"></i> 朗讀</>
-                                                            )}
-                                                        </button>
+                                    {!isGenerating && !genResult && (
+                                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+                                            <div className="bg-gradient-to-r from-slate-900 to-black px-8 py-6 text-white"><h2 className="text-2xl font-bold mb-2">歡迎使用 TONY 老師情境案例產生器</h2><p className="text-slate-300 text-sm">結合 AI 技術，快速將企業痛點轉化為高互動、具備深刻商業底蘊的沉浸式教學教案。</p></div>
+                                            <div className="p-8">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                                    <div>
+                                                        <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center"><i className="fas fa-lightbulb text-amber-500 mr-2"></i> 解決什麼問題與功用？</h3>
+                                                        <ul className="space-y-3 text-slate-600 text-sm">
+                                                            <li className="flex items-start"><i className="fas fa-check-circle text-emerald-500 mt-0.5 mr-2"></i> <div><strong>破解備課耗時：</strong>大幅縮短構思情境故事、衝突點與解決方案的時間。</div></li>
+                                                            <li className="flex items-start"><i className="fas fa-check-circle text-emerald-500 mt-0.5 mr-2"></i> <div><strong>提升學員共鳴：</strong>產出具戲劇張力的真實商業衝突，讓學員迅速代入情境。</div></li>
+                                                            <li className="flex items-start"><i className="fas fa-check-circle text-emerald-500 mt-0.5 mr-2"></i> <div><strong>多媒體教材輔助：</strong>自動生成對應的影音/圖像提示詞 (Prompt)，無縫結合生成式 AI。</div></li>
+                                                        </ul>
                                                     </div>
-                                                    <button onClick={() => handleCopy(result.scenario_case_study.story, '情境故事')} className="text-gray-400 hover:text-white transition"><i className="far fa-copy"></i></button>
-                                                </div>
-                                                <div className="p-6">
-                                                    <div className="prose-content text-slate-600 mb-6 whitespace-pre-wrap">{result.scenario_case_study.story}</div>
-                                                    <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-md">
-                                                        <h4 className="font-bold text-amber-800 text-sm mb-1">核心衝突點</h4><p className="text-amber-700 text-sm">{result.scenario_case_study.conflict_summary}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {/* Solution Card */}
-                                            <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden relative">
-                                                <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-4 border-b border-gray-700 flex justify-between items-center text-white">
-                                                    <h3 className="font-bold text-lg flex items-center"><i className="fas fa-briefcase mr-2 text-amber-400"></i> TONY 老師專業解方</h3>
-                                                    <div className="flex space-x-2">
-                                                        <button onClick={handleExportWord} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded flex items-center transition"><i className="fas fa-file-word mr-1.5"></i> 匯出 Word</button>
-                                                        <button onClick={() => handleCopy(JSON.stringify(result.solution_and_framework, null, 2), '解決方案')} className="bg-white/10 hover:bg-white/20 text-white p-1.5 rounded transition"><i className="far fa-copy"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div className="p-6">
-                                                    <div className="flex flex-wrap gap-2 mb-4">{result.solution_and_framework.applied_frameworks.map((fw, i) => (<span key={i} className="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">#{fw}</span>))}</div>
-                                                    <p className="text-slate-700 font-medium mb-6 italic border-b border-slate-100 pb-4">"{result.solution_and_framework.summary}"</p>
-                                                    <div className="space-y-6">{result.solution_and_framework.detailed_steps.map((step, idx) => (<div key={idx}><h4 className="text-amber-600 font-bold mb-2 flex items-center"><span className="bg-amber-100 text-amber-600 w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">{idx + 1}</span>{step.step_title}</h4><p className="text-slate-600 text-sm leading-relaxed pl-8" dangerouslySetInnerHTML={{__html: step.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}}></p></div>))}</div>
-                                                    {result.solution_and_framework.citation_needed && (<div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400 flex items-center"><i className="fab fa-google mr-1.5"></i> 資料參考來源：{result.solution_and_framework.citation_needed}</div>)}
-                                                </div>
-                                            </div>
-
-                                            {/* Outro Golden Sentence Card */}
-                                            {result.video_outro && (
-                                                <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl shadow-md border border-amber-600 overflow-hidden text-white relative">
-                                                     <div className="px-6 py-4 flex justify-between items-start">
-                                                        <div className="flex-1">
-                                                            <h3 className="font-bold text-white text-lg mb-2 flex items-center">
-                                                                <i className="fas fa-quote-left mr-2 opacity-50"></i> 影片結尾金句 (Video Outro)
-                                                            </h3>
-                                                            <div className="text-lg font-medium leading-relaxed italic opacity-95">
-                                                                {result.video_outro.golden_sentence}
-                                                            </div>
+                                                    <div>
+                                                        <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center"><i className="fas fa-cogs text-amber-500 mr-2"></i> 簡單三步驟快速上手</h3>
+                                                        <div className="space-y-3">
+                                                            <div className="flex items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100"><span className="bg-black text-white w-6 h-6 rounded-full flex justify-center items-center text-xs font-bold mr-3 shrink-0">1</span><span className="text-sm text-slate-700">在左側輸入您想探討的<strong>企業痛點或情境問題</strong>。</span></div>
+                                                            <div className="flex items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100"><span className="bg-black text-white w-6 h-6 rounded-full flex justify-center items-center text-xs font-bold mr-3 shrink-0">2</span><span className="text-sm text-slate-700">勾選適合的 <strong>TONY 老師專業解方框架</strong>。</span></div>
+                                                            <div className="flex items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100"><span className="bg-amber-500 text-white w-6 h-6 rounded-full flex justify-center items-center text-xs font-bold mr-3 shrink-0"><i className="fas fa-magic"></i></span><span className="text-sm text-slate-700">點擊生成，獲得<strong>完整故事與詳細步驟解析</strong>。</span></div>
                                                         </div>
-                                                        <button 
-                                                            onClick={() => handleCopy(result.video_outro.golden_sentence, '金句')}
-                                                            className="ml-4 bg-white/20 hover:bg-white/30 p-2 rounded-lg transition"
-                                                            title="複製金句"
-                                                        >
-                                                            <i className="far fa-copy"></i>
-                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="border-t border-slate-200 pt-6">
+                                                    <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center"><i className="fas fa-rocket text-amber-500 mr-2"></i> 不知道寫什麼？一鍵套用內建示範</h3>
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                        <button onClick={() => applyExample('在地30年傳產五金工廠，二代接班想做電商與數位轉型，但老員工強烈抗拒，認為網路行銷浪費錢且無效。', ['數位行銷策略 (Digital Marketing)', '商業模式創新 (Business Model Innovation)'])} className="text-left p-4 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition bg-white group"><div className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded inline-block mb-2">傳產轉型</div><h4 className="font-bold text-slate-800 text-sm mb-2 group-hover:text-amber-600 transition">老臣抗拒數位化</h4><p className="text-xs text-slate-500 line-clamp-2">在地30年傳產五金工廠，二代接班想做電商，但老員工強烈抗拒...</p></button>
+                                                        <button onClick={() => applyExample('知名連鎖餐飲品牌爆發嚴重的食安客訴，老鼠出沒影片在社群媒體上瘋傳，品牌形象受創，網友發起抵制。', ['危機處理與公關 (Crisis Management)', '品牌行銷 (Brand Marketing)'])} className="text-left p-4 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition bg-white group"><div className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded inline-block mb-2">公關危機</div><h4 className="font-bold text-slate-800 text-sm mb-2 group-hover:text-amber-600 transition">食安風暴社群炎上</h4><p className="text-xs text-slate-500 line-clamp-2">知名連鎖餐飲品牌爆發嚴重的食安客訴，老鼠影片在社群瘋傳...</p></button>
+                                                        <button onClick={() => applyExample('行銷團隊面臨產能瓶頸，主管希望全面導入生成式 AI 來提升效率，但團隊成員擔心工作被取代而消極配合，甚至故意挑錯。', ['生成式 AI 應用 (Generative AI)', '敏捷管理 (Agile Management)'])} className="text-left p-4 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition bg-white group"><div className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded inline-block mb-2">AI 導入</div><h4 className="font-bold text-slate-800 text-sm mb-2 group-hover:text-amber-600 transition">員工抗拒 AI 工具</h4><p className="text-xs text-slate-500 line-clamp-2">行銷團隊面臨產能瓶頸，主管希望全面導入生成式 AI，但成員擔心...</p></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {genResult && !isGenerating && (
+                                        <div className="fade-in space-y-6">
+                                            <div className="flex justify-end space-x-2"><button onClick={handleSaveCase} disabled={isSaving} className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition flex items-center shadow-sm">{isSaving ? <i className="fas fa-spinner fa-spin mr-2"></i> : <i className="fas fa-save mr-2"></i>} 儲存到案例庫</button></div>
+                                            <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                                                <div className="bg-black px-6 py-4 flex justify-between items-center"><h3 className="font-bold text-white"><span className="text-amber-500 mr-2">●</span>{genResult.scenario_case_study.title}</h3><div className="flex space-x-3"><button onClick={() => toggleSpeech(genResult.scenario_case_study.story)} className={`text-xs px-2 py-1 rounded transition ${isSpeaking ? 'bg-red-500 text-white pulse-ring' : 'bg-gray-700 text-gray-200'}`}><i className={isSpeaking ? "fas fa-stop-circle mr-1" : "fas fa-volume-up mr-1"}></i> {isSpeaking ? '停止' : '朗讀'}</button><button onClick={() => handleCopy(genResult.scenario_case_study.story)} className="text-gray-400 hover:text-white"><i className="far fa-copy"></i></button></div></div>
+                                                <div className="p-6"><div className="text-slate-600 whitespace-pre-wrap leading-relaxed mb-6">{genResult.scenario_case_study.story}</div><div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r"><h4 className="font-bold text-amber-800 text-sm mb-1">核心衝突點</h4><p className="text-amber-700 text-sm">{genResult.scenario_case_study.conflict_summary}</p></div></div>
+                                            </div>
+                                            <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                                                <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-4 flex justify-between items-center"><h3 className="font-bold text-white"><i className="fas fa-briefcase mr-2 text-amber-400"></i> TONY 老師專業解方</h3><div className="flex space-x-2"><button onClick={handleExportWord} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded transition"><i className="fas fa-file-word mr-1"></i> 匯出 Word</button><button onClick={() => handleCopy(JSON.stringify(genResult.solution_and_framework, null, 2))} className="text-white p-1 hover:bg-white/20 rounded"><i className="far fa-copy"></i></button></div></div>
+                                                <div className="p-6">
+                                                    <p className="text-slate-700 font-medium italic border-b border-slate-100 pb-4 mb-6">"{genResult.solution_and_framework.summary}"</p>
+                                                    <div className="space-y-6">{genResult.solution_and_framework.detailed_steps.map((step, idx) => (<div key={idx}><h4 className="text-amber-600 font-bold mb-2 flex items-center"><span className="bg-amber-100 text-amber-600 w-6 h-6 rounded-full flex justify-center items-center text-xs mr-2">{idx+1}</span>{step.step_title}</h4><p className="text-slate-600 text-sm pl-8" dangerouslySetInnerHTML={{__html: step.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}}></p></div>))}</div>
+                                                </div>
+                                            </div>
+                                            {genResult.video_outro && (
+                                                <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-6 text-white shadow-md"><h3 className="font-bold mb-2 opacity-90"><i className="fas fa-quote-left mr-2"></i>影片結尾金句 (Video Outro)</h3><p className="text-lg italic leading-relaxed">{genResult.video_outro.golden_sentence}</p></div>
+                                            )}
+                                            {genResult.media_prompts && (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 fade-in">
+                                                    <div className="md:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                                        <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Image Prompt (ChatGPT image2.5)</span><button onClick={() => handleCopy(genResult.media_prompts.image_prompt_chatgpt_image2_5)} className="text-gray-400 hover:text-amber-500 transition"><i className="far fa-copy"></i></button></div>
+                                                        <div className="p-3 bg-slate-900"><code className="text-green-400 text-xs font-mono break-all block">{genResult.media_prompts.image_prompt_chatgpt_image2_5}</code></div>
+                                                    </div>
+                                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                                        <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Video Prompt (Gemini Omni)</span><button onClick={() => handleCopy(genResult.media_prompts.video_prompt_gemini_omni)} className="text-gray-400 hover:text-amber-500 transition"><i className="far fa-copy"></i></button></div>
+                                                        <div className="p-3 bg-slate-900 h-full"><code className="text-blue-300 text-xs font-mono break-all block">{genResult.media_prompts.video_prompt_gemini_omni}</code></div>
+                                                    </div>
+                                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                                        <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Music Prompt (SUNO)</span><button onClick={() => handleCopy(genResult.media_prompts.music_prompt_suno)} className="text-gray-400 hover:text-amber-500 transition"><i className="far fa-copy"></i></button></div>
+                                                        <div className="p-3 bg-slate-900 h-full"><code className="text-purple-300 text-xs font-mono break-all block">{genResult.media_prompts.music_prompt_suno}</code></div>
                                                     </div>
                                                 </div>
                                             )}
-
-                                            {/* Prompts */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="md:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                                    <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Image Prompt</span><button onClick={() => handleCopy(result.media_prompts.image_prompt_nanobanana_pro, '圖像提示詞')} className="text-gray-400 hover:text-amber-500"><i className="far fa-copy"></i></button></div>
-                                                    <div className="p-3 bg-slate-900"><code className="text-green-400 text-xs font-mono break-all block">{result.media_prompts.image_prompt_nanobanana_pro}</code></div>
-                                                </div>
-                                                <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                                    <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Video Prompt</span><button onClick={() => handleCopy(result.media_prompts.video_prompt_sora2, '影片提示詞')} className="text-gray-400 hover:text-amber-500"><i className="far fa-copy"></i></button></div>
-                                                    <div className="p-3 bg-slate-900 h-full"><code className="text-blue-300 text-xs font-mono break-all block">{result.media_prompts.video_prompt_sora2}</code></div>
-                                                </div>
-                                                <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                                    <div className="bg-black px-4 py-2 border-b border-gray-800 flex justify-between items-center"><span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Music Prompt</span><button onClick={() => handleCopy(result.media_prompts.music_prompt_suno, '音樂提示詞')} className="text-gray-400 hover:text-amber-500"><i className="far fa-copy"></i></button></div>
-                                                    <div className="p-3 bg-slate-900 h-full"><code className="text-purple-300 text-xs font-mono break-all block">{result.media_prompts.music_prompt_suno}</code></div>
-                                                </div>
-                                            </div>
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         )}
 
                         {/* VIEW: LIBRARY */}
-                        {view === 'library' && (
+                        {globalView === 'app' && appTab === 'library' && (
                             <div className="fade-in max-w-5xl mx-auto">
-                                <div className="mb-8 text-center">
-                                    <h2 className="text-2xl font-bold text-slate-800 mb-2">我的案例庫</h2>
-                                    <p className="text-slate-500">TONY 老師的智慧資產累積，隨時調閱歷史教案。</p>
-                                </div>
-                                
-                                {/* Search Bar */}
-                                <div className="mb-6 relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i className="fas fa-search text-slate-400"></i>
-                                    </div>
-                                    <input 
-                                        type="text" 
-                                        className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 sm:text-sm shadow-sm"
-                                        placeholder="搜尋案例標題、主題關鍵字..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                    />
-                                </div>
-
-                                {/* List */}
+                                <div className="mb-8 text-center"><h2 className="text-2xl font-bold text-slate-800 mb-2">我的案例庫</h2><p className="text-slate-500">TONY 老師的智慧資產累積，隨時調閱歷史教案。</p></div>
+                                <div className="mb-6 relative"><div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i className="fas fa-search text-slate-400"></i></div><input type="text" className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg bg-white shadow-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="搜尋案例標題、主題關鍵字..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} /></div>
                                 <div className="space-y-4">
                                     {filteredSavedCases.length === 0 ? (
-                                        <div className="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300">
-                                            <i className="fas fa-folder-open text-4xl text-slate-200 mb-3"></i>
-                                            <p className="text-slate-500">沒有找到符合的案例，或是案例庫是空的。</p>
-                                        </div>
+                                        <div className="text-center py-12 bg-white rounded-xl border border-dashed border-slate-300"><i className="fas fa-folder-open text-4xl text-slate-200 mb-3"></i><p className="text-slate-500">沒有找到符合的案例。</p></div>
                                     ) : (
                                         filteredSavedCases.map((savedCase) => (
                                             <div key={savedCase.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition hover:shadow-md">
                                                 <div className="flex justify-between items-start">
                                                     <div className="flex-1">
-                                                        <div className="flex items-center mb-1">
-                                                            <span className="text-xs font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded mr-2">
-                                                                {new Date(savedCase.createdAt?.seconds * 1000).toLocaleDateString()}
-                                                            </span>
-                                                            <h3 className="text-lg font-bold text-slate-800">{savedCase.result?.scenario_case_study?.title || "未命名案例"}</h3>
-                                                        </div>
-                                                        <p className="text-sm text-slate-500 mb-3 line-clamp-2">
-                                                            {savedCase.topic}
-                                                        </p>
-                                                        <div className="flex flex-wrap gap-2">
-                                                            {savedCase.frameworks?.map((fw, i) => (
-                                                                <span key={i} className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded-full">
-                                                                    #{fw}
-                                                                </span>
-                                                            ))}
-                                                        </div>
+                                                        <div className="flex items-center mb-1"><span className="text-xs font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded mr-2">{savedCase.createdAt ? new Date(savedCase.createdAt.seconds * 1000).toLocaleDateString() : '未知時間'}</span><h3 className="text-lg font-bold text-slate-800">{savedCase.result?.scenario_case_study?.title || "未命名案例"}</h3></div>
+                                                        <p className="text-sm text-slate-500 mb-3 line-clamp-2">{savedCase.topic}</p>
+                                                        <div className="flex flex-wrap gap-2">{savedCase.frameworks?.map((fw, i) => (<span key={i} className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded-full border border-slate-200">#{fw}</span>))}</div>
                                                     </div>
                                                     <div className="flex flex-col space-y-2 ml-4">
-                                                        <button 
-                                                            onClick={() => handleViewCase(savedCase)}
-                                                            className="text-sm text-slate-600 hover:text-amber-600 font-medium px-3 py-1.5 border border-slate-200 rounded-md hover:border-amber-500 transition"
-                                                        >
-                                                            <i className="fas fa-eye mr-1.5"></i> 查看
-                                                        </button>
-                                                        <button 
-                                                            onClick={(e) => handleDeleteCase(savedCase.id, e)}
-                                                            className="text-sm text-slate-400 hover:text-red-600 px-3 py-1.5 transition text-right"
-                                                        >
-                                                            <i className="fas fa-trash"></i>
-                                                        </button>
+                                                        <button onClick={() => handleViewCase(savedCase)} className="text-sm text-slate-600 hover:text-amber-600 font-medium px-3 py-1.5 border border-slate-200 rounded-md hover:border-amber-500 transition shadow-sm"><i className="fas fa-eye mr-1.5"></i> 查看</button>
+                                                        <button onClick={(e) => handleDeleteCase(savedCase.id, e)} className="text-sm text-slate-400 hover:text-red-600 px-3 py-1.5 transition text-right"><i className="fas fa-trash"></i> 刪除</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -767,13 +877,87 @@
                                 </div>
                             </div>
                         )}
+
+                        {/* VIEW: ADMIN */}
+                        {globalView === 'admin' && userProfile?.role === 'admin' && (
+                            <div className="fade-in max-w-6xl mx-auto space-y-6">
+                                <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                    <div className="bg-slate-900 px-6 py-4 flex justify-between items-center border-b border-slate-800">
+                                        <h2 className="text-xl font-bold text-white"><i className="fas fa-shield-alt text-indigo-400 mr-2"></i> 系統管理後台</h2>
+                                        <div className="flex space-x-2">
+                                            <button onClick={() => setAdminTab('users')} className={`px-4 py-2 rounded text-sm font-medium transition ${adminTab === 'users' ? 'bg-indigo-500 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>會員管理</button>
+                                            <button onClick={() => setAdminTab('ai_report')} className={`px-4 py-2 rounded text-sm font-medium transition ${adminTab === 'ai_report' ? 'bg-indigo-500 text-white' : 'text-slate-300 hover:bg-slate-800'}`}>AI 商業數據分析</button>
+                                        </div>
+                                    </div>
+                                    
+                                    {adminTab === 'users' && (
+                                        <div className="p-6">
+                                            <div className="flex justify-between items-center mb-4"><h3 className="font-bold text-slate-800">註冊會員名單 ({adminUsers.length})</h3><button onClick={exportCSV} className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition flex items-center"><i className="fas fa-file-csv mr-2"></i> 匯出 CSV (含 BOM)</button></div>
+                                            <div className="overflow-x-auto border border-slate-200 rounded-lg">
+                                                <table className="min-w-full divide-y divide-slate-200">
+                                                    <thead className="bg-slate-50">
+                                                        <tr>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">電子信箱</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">真實姓名/身分</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">註冊時間</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">登入次數</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">權限狀態</th>
+                                                            <th className="px-6 py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="bg-white divide-y divide-slate-200">
+                                                        {adminUsers.map(u => {
+                                                            const isSupreme = u.email.toLowerCase() === SUPREME_ADMIN_EMAIL.toLowerCase();
+                                                            return (
+                                                                <tr key={u.uid} className="hover:bg-slate-50">
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{u.email}</td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500"><div>{u.realName}</div><div className="text-xs text-slate-400">{u.identity}</div></td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{u.createdAt ? new Date(u.createdAt.seconds * 1000).toLocaleString() : 'N/A'}</td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{u.loginCount}</td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap"><span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${u.role === 'admin' ? 'bg-indigo-100 text-indigo-800' : 'bg-green-100 text-green-800'}`}>{u.role === 'admin' ? '管理員' : '一般用戶'}</span></td>
+                                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
+                                                                        <button onClick={() => toggleUserRole(u)} disabled={isSupreme} className={`mr-3 ${isSupreme ? 'text-slate-300 cursor-not-allowed' : 'text-indigo-600 hover:text-indigo-900'}`}>{u.role === 'admin' ? '降為用戶' : '升為管理員'}</button>
+                                                                        <button onClick={() => setModal({ show: true, title: '刪除會員', message: `確定要刪除會員 ${u.email} 嗎？`, isDanger: true, confirmText: '確定刪除', onCancel: () => setModal({show:false}), onConfirm: () => confirmDeleteUser(u) })} disabled={isSupreme} className={`${isSupreme ? 'text-slate-300 cursor-not-allowed' : 'text-red-600 hover:text-red-900'}`}>刪除</button>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        })}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {adminTab === 'ai_report' && (
+                                        <div className="p-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                                <div className="md:col-span-2 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                                    <h3 className="font-bold text-slate-800 mb-3"><i className="fas fa-filter text-amber-500 mr-2"></i> 設定分析區間</h3>
+                                                    <div className="flex flex-wrap items-end gap-4">
+                                                        <div><label className="block text-xs font-bold text-slate-500 mb-1">起始日期</label><input type="date" value={reportStartDate} onChange={e => setReportStartDate(e.target.value)} className="px-3 py-2 border border-slate-300 rounded focus:ring-indigo-500 outline-none shadow-sm bg-white" /></div>
+                                                        <div><label className="block text-xs font-bold text-slate-500 mb-1">結束日期</label><input type="date" value={reportEndDate} onChange={e => setReportEndDate(e.target.value)} className="px-3 py-2 border border-slate-300 rounded focus:ring-indigo-500 outline-none shadow-sm bg-white" /></div>
+                                                        <button onClick={generateAdminReport} disabled={isGeneratingReport} className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold shadow-sm transition">
+                                                            {isGeneratingReport ? <><i className="fas fa-spinner fa-spin mr-2"></i> 分析中</> : <><i className="fas fa-magic mr-2"></i> 生成報告</>}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 flex flex-col justify-center items-center text-center"><i className="fas fa-database text-indigo-400 text-3xl mb-2"></i><div className="text-sm text-indigo-800 font-medium">總共收集的生成紀錄</div><div className="text-3xl font-black text-indigo-900 mt-1">{adminCases.length} <span className="text-sm font-normal">筆</span></div></div>
+                                            </div>
+                                            {reportResult && (
+                                                <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                                                    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 flex justify-between items-center"><h4 className="font-bold text-slate-800"><i className="fas fa-robot text-indigo-500 mr-2"></i> AI 分析結果</h4><button onClick={exportReportWord} className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded transition shadow-sm font-medium"><i className="fas fa-file-word mr-1.5"></i> 匯出 Word</button></div>
+                                                    <div className="p-6 prose-content text-slate-700 max-h-[500px] overflow-y-auto bg-white" dangerouslySetInnerHTML={{__html: reportResult.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>')}}></div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </main>
 
-                    {/* Footer */}
-                    <footer className="bg-black text-gray-500 py-6 border-t border-gray-800 mt-auto">
-                        <div className="max-w-7xl mx-auto px-4 text-center">
-                            <p className="text-sm">© 2026 TONY STUDIO. 本教材由 TONY STUDIO 楊文澤顧問設計. All Rights Reserved.</p>
-                        </div>
+                    <footer className="bg-black text-gray-500 py-6 mt-auto">
+                        <div className="max-w-7xl mx-auto px-4 text-center"><p className="text-sm">© 2026 TONY STUDIO. 本教材由 TONY STUDIO 楊文澤顧問設計. All Rights Reserved.</p></div>
                     </footer>
                 </div>
             );
